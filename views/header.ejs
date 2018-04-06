@@ -1,0 +1,32 @@
+		<!-- Header -->
+    <section id="header">
+      <header>
+        <span class="image avatar"><img src="images/<%=userAvatarimg %>" alt="" /></span>
+        <h1 id="logo"><a href="#"><%= userName %></a></h1>
+        <p><%= userDesc %></p>
+      </header>
+      <nav id="nav">
+        <ul>
+          <li><a href="" >Principal</a></li>
+          <li><a href="">Subir meme</a></li>
+          <li><a href="" id="logout-user-a" >Cerrar sesion</a></li>
+        </ul>
+      </nav>
+
+      <form id="user-logout" action="/users/logout" method="post" style="visibility: hidden;">
+        <input type="submit" value="SALIR">
+      </form>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+          console.log('header#DOMContentLoaded');
+          document.getElementById('logout-user-a').addEventListener('click' , logoutUser);
+        });
+
+        function logoutUser(event) {
+          console.log('SUBIENDO FORMULARIO DE CIERRE DE SESION');
+          event.preventDefault();
+          document.forms["user-logout"].submit();
+        }
+      </script>
+    </section>
