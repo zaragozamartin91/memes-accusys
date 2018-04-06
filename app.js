@@ -9,6 +9,7 @@ var dbManager = require('./model/db-manager');
 var pgSession = require('connect-pg-simple')(session);
 
 var userLoadMiddleware = require('./middleware/userLoad');
+var messages = require('./middleware/messages');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -36,13 +37,15 @@ app.use(session({
   resave: true,
   secret: 'memes de accoses',
   cookie: {
-    maxAge: 1000 * 60 * 1, // sesion de un minuto
+    maxAge: 1000 * 60 * 10, // sesion de un minuto
     secure: app.get('env') === 'production'
   }
 }));
 
 /*cargamos el middleware de usuarios para inyectar el usuario en cada request*/
 app.use(userLoadMiddleware);
+/*Agregamos el middleware para trabajar con mensajes en cada redirect...*/
+app.use(messages);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

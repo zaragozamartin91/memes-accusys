@@ -21,6 +21,13 @@
 								<div class="container">
 									<h3>Iniciar sesion</h3>
 									<p>Ingrese su nombre de usuario y password de acoooseees</p>
+									<% if(messages) {
+										messages.forEach( function(msg) {
+									%>
+									<p><%=msg.string %></p>
+									<%
+										} );
+									} %>
 									<form method="post" action="/users/login">
 										<div class="row uniform">
 											<div class="12u"><input type="text" name="username" id="username" placeholder="Nombre de usuario" /></div>
