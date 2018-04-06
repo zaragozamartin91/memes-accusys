@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+var loginMiddleware = require('../middleware/login');
+
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', loginMiddleware, function (req, res, next) {
   res.render('index', { title: 'Memes accusyanos' });
+});
+
+router.get('/index', (req, res) => {
+  res.redirect('/');
 });
 
 // Access the session as req.session

@@ -8,11 +8,13 @@ var session = require('express-session');
 var dbManager = require('./model/db-manager');
 var pgSession = require('connect-pg-simple')(session);
 
+var userLoadMiddleware = require('./middleware/userLoad');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-app.set('env' , 'development');
+app.set('env', 'development');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +30,7 @@ app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
   store: new pgSession({
-    pool : dbManager.poolWrapper.pool,  // Connection pool  
+    pool: dbManager.poolWrapper.pool,  // Connection pool  
   }),
   saveUninitialized: true,
   resave: true,
@@ -39,16 +41,19 @@ app.use(session({
   }
 }));
 
+/*cargamos el middleware de usuarios para inyectar el usuario en cada request*/
+app.use(userLoadMiddleware);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
