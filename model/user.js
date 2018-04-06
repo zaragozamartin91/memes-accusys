@@ -2,8 +2,10 @@ const dbManager = require('./db-manager');
 const encryptor = require('../utils/encryptor');
 
 const table = 'users';
+const idType = 'int'; // el tipo SERIAL puede verse como int 
 
 exports.table = table;
+exports.idType = idType;
 
 exports.createTable = function () {
   const sql = `CREATE TABLE users(
@@ -39,7 +41,7 @@ exports.validate = function (user, password) {
   return encryptor.verify(user.password, password);
 };
 
-if ('run' == process.argv[2]) {
+if ('user.js' == process.argv[2]) {
   // exports.insert({
   //   username: 'franco',
   //   name: 'Franco Milanese',
