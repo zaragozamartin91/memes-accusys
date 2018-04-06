@@ -4,11 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var dbManager = require('./model/db-manager');
+var pgSession = require('connect-pg-simple')(session);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+app.set('env' , 'development');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +23,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('trust proxy', 1) // trust first proxy
+
+app.use(session({
+  store: new pgSession({
+    pool : dbManager.poolWrapper.pool,  // Connection pool  
+  }),
+  saveUninitialized: true,
+  resave: true,
+  secret: 'memes de accoses',
+  cookie: {
+    maxAge: 1000 * 60 * 1, // sesion de un minuto
+    secure: app.get('env') === 'production'
+  }
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
