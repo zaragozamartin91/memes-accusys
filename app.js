@@ -14,6 +14,7 @@ var messages = require('./middleware/messages');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var memesRouter = require('./routes/memes');
 
 var app = express();
 app.set('env', 'development');
@@ -40,7 +41,7 @@ sessionInitializer.initialize().then(() => {
         resave: true,
         secret: 'memes de accoses',
         cookie: {
-            maxAge: 1000 * 60 * 10, // sesion de un minuto
+            maxAge: 1000 * 60 * 60, 
             secure: app.get('env') === 'production'
         }
     }));
@@ -52,6 +53,7 @@ sessionInitializer.initialize().then(() => {
 
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
+    app.use('/memes', memesRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

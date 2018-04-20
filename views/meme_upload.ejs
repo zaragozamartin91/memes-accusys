@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title><%= title %></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<% include header %>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+					<div id="main">
+						<!-- One -->
+							<section id="one">
+								<div class="container">
+									<header class="major">
+										<h2>Subir meme</h2>
+									</header>
+								</div>
+							</section>
+
+						<!-- Four -->
+            <section id="four">
+              <div class="container">
+                <% if(messages) {
+                  messages.forEach( function(msg) {
+                %>
+                <p><%=msg.string %></p>
+                <%
+                  } );
+                } %>
+                <form method="post" action="/memes" enctype="multipart/form-data">
+                  <div class="row uniform">
+                    <div class="12u"><input type="text" name="title" id="title" placeholder="Titulo" /></div>
+                  </div>
+                  <div class="row uniform">
+                    <div class="12u"><input type="file" name="imgfile" id="imgfile"></div>
+                  </div>
+
+                  <div class="row uniform">
+                    <div class="12u">
+                      <ul class="actions">
+                        <li><input type="submit" class="special" value="Enviar" /></li>
+                        <li><input type="reset" value="Limpiar" /></li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+
+					<!-- Footer -->
+					<section id="footer">
+						<div class="container">
+							<ul class="copyright">
+								<li>&copy; Martin zaragoza.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollzer.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
