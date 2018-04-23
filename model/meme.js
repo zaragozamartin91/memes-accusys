@@ -16,6 +16,10 @@ exports.insert = function ({ usr, title, img }) {
   return dbManager.queryPromise(sql, [usr, title, img]);
 };
 
+exports.find = function() {
+  return dbManager.queryPromise(`SELECT * FROM memes`, []);
+};
+
 console.log(process.argv[1]);
 if (process.argv[1].endsWith('meme.js')) {
   exports.createTable().then(e => {

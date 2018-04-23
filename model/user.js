@@ -25,6 +25,10 @@ exports.insert = function (obj) {
     return dbManager.queryPromise(sql, [username, name, avatarimg, encPassw, description]);
 };
 
+exports.find = function () {
+    return dbManager.queryPromise(`SELECT * FROM ${table}`, []);
+};
+
 exports.findById = function (uid) {
     const sql = `SELECT * FROM ${table} WHERE id=$1`;
     const values = [uid];
@@ -43,13 +47,13 @@ exports.validate = function (user, password) {
 
 if (process.argv[1].endsWith('user.js')) {
     exports.insert({
-      username: 'franco',
-      name: 'Franco Milanese',
-      avatarimg: 'franco_avatar.png',
-      password: 'facho',
-      description: 'Enano facho culo roto'
+        username: 'franco',
+        name: 'Franco Milanese',
+        avatarimg: 'franco_avatar.png',
+        password: 'facho',
+        description: 'Enano facho culo roto'
     }).then(user => {
-      console.log('usuario ' + JSON.stringify(user) + ' insertado');
+        console.log('usuario ' + JSON.stringify(user) + ' insertado');
     });
 
     //   exports.findByUsername('franco').then(([user]) => {
