@@ -12,6 +12,7 @@ exports.createTable = function () {
 };
 
 
+
 console.log(process.argv[1]);
 if (process.argv[1].endsWith('meme.js')) {
   exports.createTable().then(e => {

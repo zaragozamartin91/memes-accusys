@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
@@ -15,9 +16,20 @@ var messages = require('./middleware/messages');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var memesRouter = require('./routes/memes');
+var testsRouter = require('./routes/tests');
 
 var app = express();
 app.set('env', 'development');
+
+const BASE_DIR = process.env.BASE_DIR || __dirname;
+process.env.BASE_DIR = BASE_DIR;
+const IMG_DIR = process.env.IMG_DIR || path.join(BASE_DIR, 'public', 'images');
+process.env.IMG_DIR = IMG_DIR;
+const MEME_IMG_DIR = path.join(IMG_DIR, 'memes');
+process.env.MEME_IMG_DIR = MEME_IMG_DIR;
+
+fs.exists(MEME_IMG_DIR, exists => { if (!exists) fs.mkdir(MEME_IMG_DIR) });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,10 +53,11 @@ sessionInitializer.initialize().then(() => {
         resave: true,
         secret: 'memes de accoses',
         cookie: {
-            maxAge: 1000 * 60 * 60, 
+            maxAge: 1000 * 60 * 60,
             secure: app.get('env') === 'production'
         }
     }));
+    console.log('Manejador de sesiones configurado');
 
     /*cargamos el middleware de usuarios para inyectar el usuario en cada request*/
     app.use(userLoadMiddleware);
@@ -54,6 +67,7 @@ sessionInitializer.initialize().then(() => {
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
     app.use('/memes', memesRouter);
+    app.use('/tests', testsRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

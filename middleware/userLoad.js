@@ -10,6 +10,7 @@ module.exports = function (req, res, next) {
     }
 
     getUser(uid).then( ([user]) => {
+        req.uid = uid;
         req.userEmail = res.locals.userEmail = user.email;
         req.userName = res.locals.userName = user.name;
         req.userDesc = res.locals.userDesc = user.description;
