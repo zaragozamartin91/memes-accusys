@@ -20,13 +20,21 @@ router.post('/', (req, res) => {
   form.parse(req, function (err, fields, files) {
     const imgfile = files.imgfile;
     // const destPath = path.join(__dirname , imgfile.name);
-    const destPath = path.join(process.env.MEME_IMG_DIR, `${Date.now()}_${imgfile.name}`);
+
+    const img = `${Date.now()}_${imgfile.name}`;
+    const destPath = path.join(process.env.MEME_IMG_DIR, img);
     fs.createReadStream(imgfile.path).pipe(fs.createWriteStream(destPath));
 
     const userId = req.session.uid;
-    
-
-    res.send({ fields: fields, files: files , destPath });
+    Meme.insert({ usr: userId, title: fields.title, img }).then(m => {
+      console.log(`Meme ${JSON.stringify(m)} insertado!`);
+      res.message('Meme creado!');
+      res.redirect('back');
+    }).catch(cause => {
+      res.message('Error al crear meme','error');
+      console.error(cause);
+      res.redirect('back');
+    })
   });
 });
 

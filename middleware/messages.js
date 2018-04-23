@@ -6,8 +6,7 @@ var res = express.response;
 
 /*La siguiente funcion expande las funcionalidades de express response agregando el metodo "message" el cual agrega un mensaje a 
 req.session.messages*/
-res.message = function(msg, type) {
-    type = type || 'info';
+res.message = function(msg, type = 'info') {
     var sess = this.req.session;
     sess.messages = sess.messages || [];
     sess.messages.push({
