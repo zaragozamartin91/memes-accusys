@@ -3,6 +3,7 @@ var router = express.Router();
 
 const User = require('../model/user');
 const Meme = require('../model/meme');
+const sessionInitializer = require('../utils/session-init');
 
 router.post('/salute', (req, res) => {
   console.log(req.body);
@@ -24,6 +25,13 @@ router.get('/session', function (req, res, next) {
 })
 
 router.post('/data', (req, res) => {
+  sessionInitializer.initialize()
+    .then(e => {
+      console.log('Tabla de sesiones creada exitosamente');
+    }).catch(cause => {
+      console.error('Error al crear tabla de sesiones');
+    })
+
   User.createTable().then(e => {
     console.log('Tabla de usuarios creada');
     return Meme.createTable();
