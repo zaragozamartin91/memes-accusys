@@ -4,15 +4,21 @@ var router = express.Router();
 var loginMiddleware = require('../middleware/login');
 
 const Meme = require('../model/meme');
+const User = require('../model/user');
 
 const PAGE_SIZE = 10;
 
 /* GET home page. */
 router.get('/', loginMiddleware, function (req, res, next) {
     const page = req.session.page || 0;
-    Meme.find({ all: false, page, pageSize: PAGE_SIZE }).then(memes => {
+    let memes = []
+    Meme.find({ all: false, page, pageSize: PAGE_SIZE }).then(ms => {
+        memes = ms;
+        return User.find();
+    }).then(users => {
+        Meme.populate({ memes, users });
         res.render('index', { title: 'Memes accusyanos', memes, page });
-    });
+    }).catch(cause => next(cause));
 });
 
 router.get('/next', (req, res) => {

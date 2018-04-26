@@ -47,7 +47,7 @@ router.post('/data', (req, res) => {
         console.log('Tabla de memes creada');
         const userobj = { username: 'franco', name: 'Franco milanese', avatarimg: 'franco_avatar.png', password: 'facho', description: 'Enano culo roto' };
         return User.insert(userobj);
-    }).then(usr => {
+    }).then(([usr]) => {
         console.log(`Usuario ${JSON.stringify(usr)} insertado!`);
         return insertMemes(usr);
     }).then(e => {

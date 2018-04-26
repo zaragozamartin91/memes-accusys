@@ -31,3 +31,11 @@ exports.find = function ({ page = 0, all = true, pageSize = 10 }) {
         return dbManager.queryPromise(sql, [maxId, pageSize]);
     });
 };
+
+exports.populate = function ({ memes, users }) {
+    memes.forEach(meme => {
+        const user = users.find(u => u.id == meme.usr);
+        meme.usr = user || { id: meme.usr, name: 'UNKNOWN' };
+    });
+    return memes;
+};
