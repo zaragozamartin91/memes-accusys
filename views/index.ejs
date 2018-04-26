@@ -7,6 +7,13 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+        <style>
+            p.memenav {font-size:0; /* Fixes inline block spacing */  }
+            span.memenav , span.align-right { width:50%; display:inline-block; }
+            span.align-right { text-align:right; }
+            span.memenav a { font-size:16px; }
+        </style>
 	</head>
 	<body>
 
@@ -22,6 +29,11 @@
 									<header class="major">
 										<h2>Memes Accusyanos</h2>
 										<p>Cuanto tenes? un meme dos memes? ponelos aca.</p>
+                                        <p>Pagina: <%= page %></p>
+                                        <p class="memenav">
+                                            <span class="memenav"><a href="/previous">Anterior</a></span>
+                                            <span class="align-right memenav"><a href="/next">Siguiente</a></span>
+                                        </p>
 									</header>
 								</div>
 							</section>
@@ -43,6 +55,10 @@
                                             
                                         <% } ) %>
 										
+                                        <p class="memenav">
+                                            <span class="memenav"><a href="/previous">Anterior</a></span>
+                                            <span class="align-right memenav"><a href="/next">Siguiente</a></span>
+                                        </p>
 									</div>
 								</div>
 							</section>

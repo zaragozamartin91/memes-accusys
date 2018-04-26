@@ -15,31 +15,13 @@ res.message = function(msg, type = 'info') {
     });
 };
 
-/*La siguiente funcion agrega un metodo "error" a todos los express.response permitiendo agregar mensajes de tipo error a la lista
-de mensajes de la sesion.*/
-res.error = function(msg) {
-    return this.message(msg, 'error');
-};
-res.danger = function(msg) {
-    return this.message(msg, 'danger');
-};
-
-res.success = function(msg) {
-    return this.message(msg, 'success');
-};
-
-res.warning = function(msg) {
-    return this.message(msg, 'warning');
-};
-res.info = function(msg) {
-    return this.message(msg, 'info');
-};
 
 /*El siguiente middleware carga en res.locals los mensajes de la sesion y agrega en res.locals una funcion para eliminar/limpiar
 mensajes. Las variables de res.locals son expuestas a los Templates.*/
 module.exports = function(req, res, next) {
     res.locals.messages = req.session.messages || [];
     res.locals.removeMessages = function() {
+        console.log('Removiendo mensajes...');
         req.session.messages = [];
     };
 

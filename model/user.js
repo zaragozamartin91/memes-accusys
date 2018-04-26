@@ -44,21 +44,3 @@ exports.findByUsername = function (username) {
 exports.validate = function (user, password) {
     return encryptor.verify(user.password, password);
 };
-
-if (process.argv[1].endsWith('user.js')) {
-    exports.insert({
-        username: 'franco',
-        name: 'Franco Milanese',
-        avatarimg: 'franco_avatar.png',
-        password: 'facho',
-        description: 'Enano facho culo roto'
-    }).then(user => {
-        console.log('usuario ' + JSON.stringify(user) + ' insertado');
-    });
-
-    //   exports.findByUsername('franco').then(([user]) => {
-    //     console.log('validacion: ' + exports.validate(user , 'facho'));
-    //   });
-
-    // exports.createTable().then(() => console.log('tabla creada'));
-}
