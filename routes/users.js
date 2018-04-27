@@ -57,7 +57,7 @@ router.post('/signup', (req, res, next) => {
     }
 
     const imgfile = files.imgfile;
-    if (!imgfile) {
+    if (imgfile.size == 0) {
       res.message('No se envio una imagen de avatar', 'error');
       return res.redirect('back');
     }

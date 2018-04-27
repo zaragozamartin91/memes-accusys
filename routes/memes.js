@@ -18,7 +18,17 @@ router.post('/', (req, res) => {
   var form = new formidable.IncomingForm();
 
   form.parse(req, function (err, fields, files) {
+    const title = fields.title;
+    if(!title) {
+      res.message('No se ingreso un titulo');
+      return res.redirect('back');
+    }
+
     const imgfile = files.imgfile;
+    if(imgfile.size == 0) {
+      res.message('No se envio un archivo');
+      return res.redirect('back');
+    }
     // const destPath = path.join(__dirname , imgfile.name);
 
     const img = `${Date.now()}_${imgfile.name}`;
