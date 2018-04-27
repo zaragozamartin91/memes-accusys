@@ -9,13 +9,13 @@ exports.idType = idType;
 
 exports.createTable = function () {
     const sql = `CREATE TABLE users(
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(32),
-    name VARCHAR(64),
-    avatarimg VARCHAR(128) DEFAULT 'avatar.jpg',
-    password VARCHAR(64),
-    description VARCHAR(128) DEFAULT ''
-  )`;
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(32),
+        name VARCHAR(64),
+        avatarimg VARCHAR(128) DEFAULT 'avatar.jpg',
+        password VARCHAR(64),
+        description VARCHAR(128) DEFAULT ''
+    )`;
     return dbManager.queryPromise(sql, []);
 };
 

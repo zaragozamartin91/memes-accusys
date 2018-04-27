@@ -3088,3 +3088,11 @@
 			}
 
 	}
+
+	p.error {
+		color: orangered;
+	}
+
+	p.info {
+		color: #39c29d;
+	}

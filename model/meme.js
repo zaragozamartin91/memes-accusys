@@ -39,6 +39,7 @@ exports.populate = function ({ memes, users }) {
     memes.forEach(meme => {
         const user = users.find(u => u.id == meme.usr);
         meme.usr = user || { id: meme.usr, name: 'UNKNOWN' };
+        meme.usr.password = '****';
     });
     return memes;
 };

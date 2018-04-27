@@ -24,7 +24,7 @@
 									<% if(messages) {
 										messages.forEach( function(msg) {
 									%>
-									<p><%=msg.string %></p>
+									<p class="<%= msg.type %>"><%=msg.string %></p>
 									<%
 										} );
 									} %>

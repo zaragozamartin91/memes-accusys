@@ -21,13 +21,13 @@ router.post('/', (req, res) => {
   form.parse(req, function (err, fields, files) {
     const title = fields.title;
     if (!title) {
-      res.message('No se ingreso un titulo');
+      res.message('No se ingreso un titulo', 'error');
       return res.redirect('back');
     }
 
     const imgfile = files.imgfile;
     if (imgfile.size == 0) {
-      res.message('No se envio un archivo');
+      res.message('No se envio un archivo', 'error');
       return res.redirect('back');
     }
     // const destPath = path.join(__dirname , imgfile.name);
@@ -55,7 +55,7 @@ router.post('/upvote/:memeId', (req, res) => {
   Upvote.insert({ usr, meme }).then(d => {
     res.send({ success: true });
   }).catch(cause => {
-    res.send({ success: false, msg: cause.message });
+    res.send({ success: false, message: cause.message });
   });
 });
 
