@@ -15,7 +15,7 @@ exports.createTable = function () {
 
 exports.insert = function ({ usr, meme }) {
   const sql = `INSERT INTO upvotes(usr,meme) VALUES($1,$2) RETURNING *`;
-  return dbManager.queryPromise(sql, [usr, title]);
+  return dbManager.queryPromise(sql, [usr, meme]);
 };
 
 exports.count = function ({ meme = 0 }) {

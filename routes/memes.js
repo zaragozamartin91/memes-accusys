@@ -8,6 +8,7 @@ var fs = require('fs');
 var path = require('path');
 
 const Meme = require('../model/meme');
+const Upvote = require('../model/upvote');
 
 /* GET users listing. */
 router.get('/', loginMiddleware, function (req, res, next) {
@@ -19,13 +20,13 @@ router.post('/', (req, res) => {
 
   form.parse(req, function (err, fields, files) {
     const title = fields.title;
-    if(!title) {
+    if (!title) {
       res.message('No se ingreso un titulo');
       return res.redirect('back');
     }
 
     const imgfile = files.imgfile;
-    if(imgfile.size == 0) {
+    if (imgfile.size == 0) {
       res.message('No se envio un archivo');
       return res.redirect('back');
     }
@@ -41,10 +42,20 @@ router.post('/', (req, res) => {
       res.message('Meme creado!');
       res.redirect('back');
     }).catch(cause => {
-      res.message('Error al crear meme','error');
+      res.message('Error al crear meme', 'error');
       console.error(cause);
       res.redirect('back');
     })
+  });
+});
+
+router.post('/upvote/:memeId', (req, res) => {
+  const usr = req.session.uid;
+  const meme = req.params.memeId;
+  Upvote.insert({ usr, meme }).then(d => {
+    res.send({ success: true });
+  }).catch(cause => {
+    res.send({ success: false, msg: cause.message });
   });
 });
 

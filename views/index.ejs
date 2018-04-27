@@ -72,18 +72,27 @@
 									<% memes.forEach( function(meme) { %>
 
 										<article>
-											<a href="#" class="image">
+											<a class="image">
 												<img src="images/memes/<%= meme.img %>" alt="" />
 											</a>
 											<div class="inner">
-												<h3>
+												<h4>
 													<%= meme.title %>
-												</h3>
-												<h4>Autor:
-													<%= meme.usr.name %>
 												</h4>
 
-												<p><strong>Upvotes:</strong> <%= meme.upvotes %></p>
+												<p>
+													<strong>Autor:</strong>
+													<%= meme.usr.name %>
+												</p>
+												<p>
+													<strong>Upvotes:</strong>
+													<span id="meme-upvote-counter-<%= meme.id %>">
+														<%= meme.upvotes %>
+													</span>
+												</p>
+												<a id="upvote-meme-<%= meme.id %>" href="#" class="icon fa-thumbs-up upvote-meme">
+													<span class="label">Like</span>
+												</a>
 											</div>
 										</article>
 
@@ -124,6 +133,36 @@
 			<script src="/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
+
+			<script>
+				document.addEventListener("DOMContentLoaded", function (event) {
+					console.log('index#DOMContentLoaded');
+					var upvoteAnchors = document.querySelectorAll('a.upvote-meme');
+					console.log(upvoteAnchors);
+					upvoteAnchors.forEach(function (ua) {
+						var memeId = ua.id.split('upvote-meme-')[1];
+						ua.addEventListener('click', upvoteMeme(memeId));
+					});
+				});
+
+				function upvoteMeme(memeId) {
+					return function (event) {
+						console.log('VOTANDO MEME ' + memeId);
+						event.preventDefault();
+
+						$.post("/memes/upvote/" + memeId, function (data) {
+							console.log(data);
+							if (data.success) {
+								var memeUpvoteElem = document.querySelector('#meme-upvote-counter-' + memeId);
+								console.log({ memeUpvoteElem });
+								var count = Number(memeUpvoteElem.innerHTML);
+								count = count + 1;
+								memeUpvoteElem.innerHTML = count;
+							}
+						});
+					}
+				}
+			</script>
 
 </body>
 
