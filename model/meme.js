@@ -1,6 +1,9 @@
 const User = require('./user');
 const dbManager = require('./db-manager');
 
+exports.table = 'memes';
+exports.idType = 'int';
+
 exports.createTable = function () {
     const sql = `CREATE TABLE memes(
     id SERIAL PRIMARY KEY,

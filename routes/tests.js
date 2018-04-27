@@ -3,6 +3,7 @@ var router = express.Router();
 
 const User = require('../model/user');
 const Meme = require('../model/meme');
+const Upvote = require('../model/upvote');
 const sessionInitializer = require('../utils/session-init');
 
 router.post('/salute', (req, res) => {
@@ -30,7 +31,7 @@ function insertMemes(user) {
         ps.push(Meme.insert({ usr: user.id, title: `Meme ${i + 1}`, img: 'pic01.jpg' }));
     }
     return Promise.all(ps);
-};
+}
 
 router.post('/data', (req, res) => {
     sessionInitializer.initialize()
@@ -43,23 +44,32 @@ router.post('/data', (req, res) => {
     User.createTable().then(e => {
         console.log('Tabla de usuarios creada');
         return Meme.createTable();
-    }).then(e => {
-        console.log('Tabla de memes creada');
-        const userobj = { username: 'franco', name: 'Franco milanese', avatarimg: 'franco_avatar.png', password: 'facho', description: 'Enano culo roto' };
-        return User.insert(userobj);
-    }).then(([usr]) => {
-        console.log(`Usuario ${JSON.stringify(usr)} insertado!`);
-        return insertMemes(usr);
-    }).then(e => {
-        console.log('Memes insertados!');
-        return true;
-    }).then(b => {
-        console.log('Creacion de datos ok');
-        res.send({ msg: 'OK' });
-    }).catch(cause => {
-        console.error(cause);
-        res.send({ msg: 'FAIL' });
-    });
+    })
+        .then(e => {
+            console.log('Tabla de memes creada');
+            return Upvote.createTable();
+        })
+        .then(e => {
+            console.log('Tabla de upvotes creada!');
+            const userobj = { username: 'franco', name: 'Franco milanese', avatarimg: 'franco_avatar.png', password: 'facho', description: 'Enano culo roto' };
+            return User.insert(userobj);
+        })
+        .then(([usr]) => {
+            console.log(`Usuario ${JSON.stringify(usr)} insertado!`);
+            return insertMemes(usr);
+        })
+        .then(e => {
+            console.log('Memes insertados!');
+            return true;
+        })
+        .then(b => {
+            console.log('Creacion de datos ok');
+            res.send({ msg: 'OK' });
+        })
+        .catch(cause => {
+            console.error(cause);
+            res.send({ msg: 'FAIL' });
+        });
 });
 
 module.exports = router;

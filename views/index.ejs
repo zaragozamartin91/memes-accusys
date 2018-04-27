@@ -1,83 +1,122 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title><%= title %></title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
-        <style>
-            p.memenav {font-size:0; /* Fixes inline block spacing */  }
-            span.memenav , span.align-right { width:50%; display:inline-block; }
-            span.align-right { text-align:right; }
-            span.memenav a { font-size:16px; }
-        </style>
-	</head>
-	<body>
+<head>
+	<title>
+		<%= title %>
+	</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
-		<% include header %>
+	<style>
+		p.memenav {
+			font-size: 0;
+			/* Fixes inline block spacing */
+		}
+
+		span.memenav,
+		span.align-right {
+			width: 50%;
+			display: inline-block;
+		}
+
+		span.align-right {
+			text-align: right;
+		}
+
+		span.memenav a {
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<% include header %>
 
 		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Main -->
-					<div id="main">
-						<!-- One -->
-							<section id="one">
-								<div class="container">
-									<header class="major">
-										<h2>Memes Accusyanos</h2>
-										<p>Cuanto tenes? un meme dos memes? ponelos aca.</p>
-                                        <p>Pagina: <%= page %></p>
-                                        <p class="memenav">
-                                            <span class="memenav"><a href="/previous">Anterior</a></span>
-                                            <span class="align-right memenav"><a href="/next">Siguiente</a></span>
-                                        </p>
-									</header>
-								</div>
-							</section>
+		<div id="wrapper">
+			<!-- Main -->
+			<div id="main">
+				<!-- One -->
+				<section id="one">
+					<div class="container">
+						<header class="major">
+							<h2>Memes Accusyanos</h2>
+							<p>Cuanto tenes? un meme dos memes? ponelos aca.</p>
+							<p>Pagina:
+								<%= page %>
+							</p>
+							<p class="memenav">
+								<span class="memenav">
+									<a href="/previous">Anterior</a>
+								</span>
+								<span class="align-right memenav">
+									<a href="/next">Siguiente</a>
+								</span>
+							</p>
+						</header>
+					</div>
+				</section>
 
-						<!-- Three -->
-							<section id="three">
-								<div class="container">
-									<div class="features">
-                                        <% if(memes.length == 0) { %> <span>No hay memes para mostrar...</span> <% } %>
-                                        <% memes.forEach( function(meme) { %>
+				<!-- Three -->
+				<section id="three">
+					<div class="container">
+						<div class="features">
+							<% if(memes.length == 0) { %>
+								<span>No hay memes para mostrar...</span>
+								<% } %>
+									<% memes.forEach( function(meme) { %>
 
-                                        <article>
-											<a href="#" class="image"><img src="images/memes/<%= meme.img %>" alt="" /></a>
+										<article>
+											<a href="#" class="image">
+												<img src="images/memes/<%= meme.img %>" alt="" />
+											</a>
 											<div class="inner">
-												<h3><%= meme.title %></h3>
-												<h4>Autor: <%= meme.usr.name %></h4>
-                                                
-												<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+												<h3>
+													<%= meme.title %>
+												</h3>
+												<h4>Autor:
+													<%= meme.usr.name %>
+												</h4>
+
+												<p><strong>Upvotes:</strong> <%= meme.upvotes %></p>
 											</div>
 										</article>
-                                            
-                                        <% } ) %>
-										
-                                        <p class="memenav">
-                                            <span class="memenav"><a href="/previous">Anterior</a></span>
-                                            <span class="align-right memenav"><a href="/next">Siguiente</a></span>
-                                        </p>
-									</div>
-								</div>
-							</section>
 
+										<% } ) %>
 
-					<!-- Footer -->
-					<section id="footer">
-						<div class="container">
-							<ul class="copyright">
-								<li>&copy; Martin zaragoza.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
+											<p class="memenav">
+												<span class="memenav">
+													<a href="/previous">Anterior</a>
+												</span>
+												<span class="align-right memenav">
+													<a href="/next">Siguiente</a>
+												</span>
+											</p>
 						</div>
-					</section>
+					</div>
+				</section>
+
+
+				<!-- Footer -->
+				<section id="footer">
+					<div class="container">
+						<ul class="copyright">
+							<li>&copy; Martin zaragoza.</li>
+							<li>Design:
+								<a href="http://html5up.net">HTML5 UP</a>
+							</li>
+						</ul>
+					</div>
+				</section>
 
 			</div>
 
-		<!-- Scripts -->
+			<!-- Scripts -->
 			<script src="/assets/js/jquery.min.js"></script>
 			<script src="/assets/js/jquery.scrollzer.min.js"></script>
 			<script src="/assets/js/jquery.scrolly.min.js"></script>
@@ -86,5 +125,6 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/assets/js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

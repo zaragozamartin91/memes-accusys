@@ -5,6 +5,7 @@ var loginMiddleware = require('../middleware/login');
 
 const Meme = require('../model/meme');
 const User = require('../model/user');
+const Upvote = require('../model/upvote');
 
 const PAGE_SIZE = 10;
 
@@ -17,8 +18,11 @@ router.get('/', loginMiddleware, function (req, res, next) {
         return User.find();
     }).then(users => {
         Meme.populate({ memes, users });
-        res.render('index', { title: 'Memes accusyanos', memes, page });
-    }).catch(cause => next(cause));
+        return Upvote.populate({ memes });
+    }).then( memeswupvotes => {
+        res.render('index', { title: 'Memes accusyanos', memes: memeswupvotes, page });
+    })
+    .catch(cause => next(cause));
 });
 
 router.get('/next', (req, res) => {
