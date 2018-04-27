@@ -20,7 +20,7 @@ exports.createTable = function () {
 };
 
 exports.insert = function (obj) {
-    const { username, name, avatarimg, password, description, encPassw = encryptor.encrypt(password) } = obj;
+    const { username, name, avatarimg, password, description = 'Miembro de accoses', encPassw = encryptor.encrypt(password) } = obj;
     const sql = `INSERT INTO ${table}(username , name , avatarimg , password , description) VALUES($1,$2,$3,$4,$5) RETURNING *`;
     return dbManager.queryPromise(sql, [username, name, avatarimg, encPassw, description]);
 };

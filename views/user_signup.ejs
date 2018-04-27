@@ -19,7 +19,7 @@
 						<!-- Four -->
 							<section id="four">
 								<div class="container">
-									<h3>Iniciar sesion</h3>
+									<h3>Alta de usuario</h3>
 									<p>Ingrese su nombre de usuario y password de acoooseees</p>
 									<% if(messages) {
 										messages.forEach( function(msg) {
@@ -27,14 +27,25 @@
 									<p><%=msg.string %></p>
 									<%
 										} );
-									} %>
-									<form method="post" action="/users/login">
+                  } 
+                  removeMessages() %>
+									<form method="POST" action="/users/signup" enctype="multipart/form-data">
 										<div class="row uniform">
 											<div class="12u"><input type="text" name="username" id="username" placeholder="Nombre de usuario" /></div>
+                    </div>
+                    <div class="row uniform">
+											<div class="12u"><input type="text" name="name" id="name" placeholder="Nombre" /></div>
 										</div>
 										<div class="row uniform">
 											<div class="12u"><input type="password" name="password" id="password" placeholder="Clave" /></div>
-										</div>
+                    </div>
+                    <div class="row uniform">
+											<div class="12u"><input type="password" name="reppassword" id="reppassword" placeholder="Repetir clave" /></div>
+                    </div>
+                    
+                    <div class="row uniform">
+                      <div class="12u">Avatar: <input type="file" name="imgfile" id="imgfile"></div>
+                    </div>
 
 										<div class="row uniform">
 											<div class="12u">
@@ -46,7 +57,6 @@
 										</div>
 									</form>
 
-									<a href="/users/signup">Crear usuario</a>
 								</div>
 							</section>
 
